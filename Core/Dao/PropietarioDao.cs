@@ -15,7 +15,21 @@ namespace VehiculosDB.Core.Dao
 
         public bool delete(int idPropietario)
         {
-            throw new NotImplementedException();
+            try {
+                Con = OpenDb();
+                command = new SqlCommand(@"delete from  Propietarios where IdPropietario = @id", Con);
+                command.Parameters.Add("@id", SqlDbType.Int).Value = idPropietario;
+                return  command.ExecuteNonQuery() == 1;
+            }
+            catch (SqlException ex) when (ex.Number == 547) { 
+                
+                throw new ApplicationException("No se puede eliminar : el propitario esta asociado a un vehiculo", ex);
+
+            }
+            finally {
+                command?.Dispose();
+                CloseDb();
+            }
         }
 
         public List<Propietario> getAll(string filtro = "")
@@ -78,9 +92,33 @@ namespace VehiculosDB.Core.Dao
             );
         }
 
-        public Propietario getById(int idPropietario)
+        public Propietario? getById(int idPropietario)
         {
-            throw new NotImplementedException();
+            SqlDataReader rd = null;
+            try {
+                Con = OpenDb();
+                command = new SqlCommand(@"select IdPropietario ,Nombre, Apellido, DUI, Telefono, Direccion
+                            from Propietarios where IdPropietario = @id", Con);
+                command.Parameters.Add("@id", SqlDbType.Int).Value = idPropietario;
+                rd = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (!rd.Read())
+                {
+                    return null;
+                }
+
+                return Map(rd);
+
+            }
+            catch ( SqlException ex) { 
+                throw new ApplicationException("no pue posible consultar a los propietatios", ex);
+            }
+            finally
+            {
+                rd?.Close();
+                command?.Dispose();
+                CloseDb();
+            }
         }
 
         public int insert(Propietario paPropitario)
@@ -120,7 +158,40 @@ namespace VehiculosDB.Core.Dao
 
         public bool update(Propietario paPropitario)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Con = OpenDb();
+                command = new SqlCommand(@"update Propietarios set 
+                        Nombre = @Nombre , 
+						Apellido = @Apellido,
+						DUI = @DUI, 
+						Telefono = @Telefono , 
+						Direccion = @Direccion
+					where IdPropietario = @id", Con);
+
+                command.Parameters.Add("@Nombre", SqlDbType.NVarChar, 100).Value = paPropitario.Nombre;
+                command.Parameters.Add("@Apellido", SqlDbType.NVarChar, 100).Value = paPropitario.Apellido;
+                command.Parameters.Add("@DUI", SqlDbType.VarChar, 10).Value = paPropitario.Dui;
+                command.Parameters.Add("@Telefono", SqlDbType.VarChar, 15).Value = (object?)paPropitario.Telefono ?? DBNull.Value;
+                command.Parameters.Add("@Direccion", SqlDbType.NVarChar, 200).Value = (object?)paPropitario.Direccion ?? DBNull.Value;
+
+                command.Parameters.Add("@id", SqlDbType.Int).Value = paPropitario.IdPropietario;
+
+                return command.ExecuteNonQuery() == 1;
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                throw new ApplicationException("El DUI ya existe en la base de datos", ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("No se puede actualizar el propietario", ex);
+            }
+            finally
+            {
+                command?.Dispose();
+                CloseDb();
+            }
         }
     }
 }

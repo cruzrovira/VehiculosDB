@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using VehiculosDB.Core.Clases;
 using VehiculosDB.Core.Dao;
 
 namespace VehiculosDB.formularios
@@ -62,11 +63,46 @@ namespace VehiculosDB.formularios
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             frmInsertarPopietario frm = new frmInsertarPopietario();
-           
+
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 Carga();
             }
         }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            var id = GetIdSeleccionado();
+            if (!id.HasValue) {
+                MessageBox.Show("Selecione una fila");
+                return;
+            }
+
+            frmActualizarPropietario frm = new frmActualizarPropietario(id.Value);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                Carga();
+            }
+        }
+
+        private int? GetIdSeleccionado()
+        {
+            if (dgvPropietario.CurrentRow == null) { 
+                MessageBox.Show("Debe Selecionar un reguitro", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+                return null;
+            }
+            if (dgvPropietario.CurrentRow.DataBoundItem is Propietario propietario) { 
+                return propietario.IdPropietario;
+            }
+
+            return null;
+        } 
     }
 }
