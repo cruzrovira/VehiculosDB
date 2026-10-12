@@ -78,7 +78,8 @@ namespace VehiculosDB.formularios
         private void btnEditar_Click(object sender, EventArgs e)
         {
             var id = GetIdSeleccionado();
-            if (!id.HasValue) {
+            if (!id.HasValue)
+            {
                 MessageBox.Show("Selecione una fila");
                 return;
             }
@@ -92,17 +93,69 @@ namespace VehiculosDB.formularios
 
         private int? GetIdSeleccionado()
         {
-            if (dgvPropietario.CurrentRow == null) { 
+            if (dgvPropietario.CurrentRow == null)
+            {
                 MessageBox.Show("Debe Selecionar un reguitro", "Aviso",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning
                     );
                 return null;
             }
-            if (dgvPropietario.CurrentRow.DataBoundItem is Propietario propietario) { 
+            if (dgvPropietario.CurrentRow.DataBoundItem is Propietario propietario)
+            {
                 return propietario.IdPropietario;
             }
 
             return null;
-        } 
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            var id = GetIdSeleccionado();
+            if (!id.HasValue) { 
+                MessageBox.Show("Selecione un reguistro");
+                return;
+            }
+
+            var respuesta = MessageBox.Show("¿Desea eliminar el reguistro selecionado?", 
+                "Confirmar eliminacion", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question , MessageBoxDefaultButton.Button2) ;
+
+            if (respuesta == DialogResult.No) {
+                return;
+            }
+
+            try {
+
+                if (propietarioDao.delete(id.Value))
+                {
+                    Carga();
+                }
+                else
+                {
+
+                    MessageBox.Show("No se pudo eliminar el registro", "Aviso",
+                        MessageBoxButtons.OK , MessageBoxIcon.Information  
+                        );
+                    
+                }
+            }
+            catch( ApplicationException ex) {
+
+                MessageBox.Show("No se puedo eliminar el reguistro " + ex.Message,
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Error inesperado " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error
+                    );
+            }
+
+
+
+
+        }
     }
 }

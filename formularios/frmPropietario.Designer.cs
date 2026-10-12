@@ -32,6 +32,7 @@
             btnAgregar = new Button();
             btnEditar = new Button();
             btnCerrar = new Button();
+            btnEliminar = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvPropietario).BeginInit();
             SuspendLayout();
             // 
@@ -42,7 +43,7 @@
             dgvPropietario.Margin = new Padding(2);
             dgvPropietario.Name = "dgvPropietario";
             dgvPropietario.RowHeadersWidth = 62;
-            dgvPropietario.Size = new Size(594, 361);
+            dgvPropietario.Size = new Size(636, 361);
             dgvPropietario.TabIndex = 0;
             // 
             // btnAgregar
@@ -67,7 +68,7 @@
             // 
             // btnCerrar
             // 
-            btnCerrar.Location = new Point(682, 182);
+            btnCerrar.Location = new Point(682, 248);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(139, 51);
             btnCerrar.TabIndex = 1;
@@ -75,11 +76,22 @@
             btnCerrar.UseVisualStyleBackColor = true;
             btnCerrar.Click += btnCerrar_Click;
             // 
+            // btnEliminar
+            // 
+            btnEliminar.Location = new Point(682, 171);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(139, 51);
+            btnEliminar.TabIndex = 2;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
+            // 
             // frmPropietario
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(884, 360);
+            Controls.Add(btnEliminar);
             Controls.Add(btnCerrar);
             Controls.Add(btnEditar);
             Controls.Add(btnAgregar);
@@ -98,5 +110,6 @@
         private Button btnAgregar;
         private Button btnEditar;
         private Button btnCerrar;
+        private Button btnEliminar;
     }
 }
