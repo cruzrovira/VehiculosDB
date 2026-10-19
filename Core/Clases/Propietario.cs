@@ -12,6 +12,7 @@ namespace VehiculosDB.Core.Clases
         private string dui;
         private string telefono;
         private string direccion;
+        public Propietario() { }
 
         public Propietario(int idPropietario, 
                 string nombre, 
