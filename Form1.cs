@@ -4,6 +4,7 @@ using VehiculosDB.Core.Clases;
 using VehiculosDB.Core.Lib;
 using VehiculosDB.formularios;
 using VehiculosDB.formularios.FormsMantenimientos;
+using VehiculosDB.formularios.fotmsMarcas;
 using VehiculosDB.formularios.FromsVehiculo;
 
 
@@ -51,6 +52,12 @@ namespace VehiculosDB
         private void btnBuscarVehiculo_Click(object sender, EventArgs e)
         {
             frmBuscarVehiculo frm = new frmBuscarVehiculo();
+            frm.Show();
+        }
+
+        private void btnMarcas_Click(object sender, EventArgs e)
+        {
+            frmMarcas frm = new frmMarcas();  
             frm.Show();
         }
     }

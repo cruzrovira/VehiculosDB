@@ -33,6 +33,7 @@
             btnPropietario = new Button();
             btnMantenimiento = new Button();
             btnBuscarVehiculo = new Button();
+            btnMarcas = new Button();
             SuspendLayout();
             // 
             // btnOPen
@@ -88,11 +89,22 @@
             btnBuscarVehiculo.UseVisualStyleBackColor = true;
             btnBuscarVehiculo.Click += btnBuscarVehiculo_Click;
             // 
+            // btnMarcas
+            // 
+            btnMarcas.Location = new Point(458, 242);
+            btnMarcas.Name = "btnMarcas";
+            btnMarcas.Size = new Size(94, 29);
+            btnMarcas.TabIndex = 4;
+            btnMarcas.Text = "Marcas";
+            btnMarcas.UseVisualStyleBackColor = true;
+            btnMarcas.Click += btnMarcas_Click;
+            // 
             // frmPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 360);
+            Controls.Add(btnMarcas);
             Controls.Add(btnBuscarVehiculo);
             Controls.Add(btnMantenimiento);
             Controls.Add(btnPropietario);
@@ -111,5 +123,6 @@
         private Button btnPropietario;
         private Button btnMantenimiento;
         private Button btnBuscarVehiculo;
+        private Button btnMarcas;
     }
 }
