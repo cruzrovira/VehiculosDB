@@ -31,13 +31,16 @@
             btnOPen = new Button();
             btnClose = new Button();
             btnPropietario = new Button();
+            btnMantenimiento = new Button();
+            btnBuscarVehiculo = new Button();
             SuspendLayout();
             // 
             // btnOPen
             // 
-            btnOPen.Location = new Point(337, 75);
+            btnOPen.Location = new Point(270, 60);
+            btnOPen.Margin = new Padding(2);
             btnOPen.Name = "btnOPen";
-            btnOPen.Size = new Size(112, 34);
+            btnOPen.Size = new Size(90, 27);
             btnOPen.TabIndex = 0;
             btnOPen.Text = "Open";
             btnOPen.UseVisualStyleBackColor = true;
@@ -45,9 +48,10 @@
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(488, 75);
+            btnClose.Location = new Point(390, 60);
+            btnClose.Margin = new Padding(2);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(112, 34);
+            btnClose.Size = new Size(90, 27);
             btnClose.TabIndex = 0;
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = true;
@@ -55,22 +59,46 @@
             // 
             // btnPropietario
             // 
-            btnPropietario.Location = new Point(457, 175);
+            btnPropietario.Location = new Point(366, 140);
+            btnPropietario.Margin = new Padding(2);
             btnPropietario.Name = "btnPropietario";
-            btnPropietario.Size = new Size(112, 34);
+            btnPropietario.Size = new Size(90, 27);
             btnPropietario.TabIndex = 1;
             btnPropietario.Text = "Propietario";
             btnPropietario.UseVisualStyleBackColor = true;
             btnPropietario.Click += btnPropietario_Click;
             // 
+            // btnMantenimiento
+            // 
+            btnMantenimiento.Location = new Point(78, 157);
+            btnMantenimiento.Name = "btnMantenimiento";
+            btnMantenimiento.Size = new Size(131, 29);
+            btnMantenimiento.TabIndex = 2;
+            btnMantenimiento.Text = "Mantenimiento";
+            btnMantenimiento.UseVisualStyleBackColor = true;
+            btnMantenimiento.Click += btnMantenimiento_Click;
+            // 
+            // btnBuscarVehiculo
+            // 
+            btnBuscarVehiculo.Location = new Point(97, 226);
+            btnBuscarVehiculo.Name = "btnBuscarVehiculo";
+            btnBuscarVehiculo.Size = new Size(159, 29);
+            btnBuscarVehiculo.TabIndex = 3;
+            btnBuscarVehiculo.Text = "Buscar Vehiculo";
+            btnBuscarVehiculo.UseVisualStyleBackColor = true;
+            btnBuscarVehiculo.Click += btnBuscarVehiculo_Click;
+            // 
             // frmPrincipal
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(640, 360);
+            Controls.Add(btnBuscarVehiculo);
+            Controls.Add(btnMantenimiento);
             Controls.Add(btnPropietario);
             Controls.Add(btnClose);
             Controls.Add(btnOPen);
+            Margin = new Padding(2);
             Name = "frmPrincipal";
             Text = "Form1";
             ResumeLayout(false);
@@ -81,5 +109,7 @@
         private Button btnOPen;
         private Button btnClose;
         private Button btnPropietario;
+        private Button btnMantenimiento;
+        private Button btnBuscarVehiculo;
     }
 }

@@ -3,6 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using VehiculosDB.Core.Clases;
 using VehiculosDB.Core.Lib;
 using VehiculosDB.formularios;
+using VehiculosDB.formularios.FormsMantenimientos;
+using VehiculosDB.formularios.FromsVehiculo;
+
 
 namespace VehiculosDB
 {
@@ -37,6 +40,18 @@ namespace VehiculosDB
         {
             frmPropietario propietario = new frmPropietario();
             propietario.Show();
+        }
+
+        private void btnMantenimiento_Click(object sender, EventArgs e)
+        {
+            frmMantenimientos frm = new frmMantenimientos();
+            frm.Show();
+        }
+
+        private void btnBuscarVehiculo_Click(object sender, EventArgs e)
+        {
+            frmBuscarVehiculo frm = new frmBuscarVehiculo();
+            frm.Show();
         }
     }
 }

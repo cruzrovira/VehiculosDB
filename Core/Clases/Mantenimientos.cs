@@ -6,7 +6,6 @@ namespace VehiculosDB.Core.Clases
 {
     internal class Mantenimientos
     {
-
         private int idMantenimiento;
         private Vehiculos vehiculo;
         private DateTime fecha;
@@ -26,14 +25,11 @@ namespace VehiculosDB.Core.Clases
         public Vehiculos Vehiculo { get => vehiculo; set => vehiculo = value; }
         public TiposMantenimiento TiposMantenimiento { get => tiposMantenimiento; set => tiposMantenimiento = value; }
 
-        // uso de clses anidadas
+        // uso d clases anidadas 
 
         public int IdVehiculo { get => vehiculo.IdVehiculo; set => vehiculo.IdVehiculo = value; }
-        public string Placa { get => vehiculo.Placa; set => vehiculo.Placa = value; }
-
+        public string Placa { get => vehiculo.Placa; set => vehiculo.Placa = value; } 
         public int IdTipoMantenimiento { get => tiposMantenimiento.IdTipoMantenimiento; set => tiposMantenimiento.IdTipoMantenimiento = value; }
         public string NombreTipo { get => tiposMantenimiento.NombreTipo; set => tiposMantenimiento.NombreTipo = value; }
-
-
     }
 }
