@@ -14,7 +14,23 @@ namespace VehiculosDB.Core.Dao
         SqlCommand command = null;
         public bool delete(int idMantenimiento)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Con = OpenDb();
+                command = new SqlCommand(@"DELETE FROM Mantenimientos WHERE IdMantenimiento = @Id;", Con);
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = idMantenimiento;
+
+                return command.ExecuteNonQuery() == 1;
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("No se pudo eliminar el mantenimiento seleccionado.", ex);
+            }
+            finally
+            {
+                command?.Dispose();
+                CloseDb();
+            }
         }
 
         public List<Mantenimientos> getAll(string filtro = "")
@@ -87,7 +103,37 @@ namespace VehiculosDB.Core.Dao
 
         public Mantenimientos? getById(int idMantenimiento)
         {
-            throw new NotImplementedException();
+            SqlDataReader rd = null;
+            try
+            {
+                Con = OpenDb();
+
+                command = new SqlCommand(@"
+                            SELECT Mantenimientos.IdMantenimiento, Vehiculos.IdVehiculo, Vehiculos.Placa,
+                                   Mantenimientos.Fecha, Mantenimientos.Costo, Mantenimientos.Observaciones,
+                                   TiposMantenimiento.IdTipoMantenimiento, TiposMantenimiento.NombreTipo
+                            FROM Mantenimientos
+                            INNER JOIN Vehiculos ON Vehiculos.IdVehiculo = Mantenimientos.IdVehiculo
+                            INNER JOIN TiposMantenimiento ON TiposMantenimiento.IdTipoMantenimiento = Mantenimientos.IdTipoMantenimiento
+                            WHERE Mantenimientos.IdMantenimiento = @Id", Con);
+
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = idMantenimiento;
+                rd = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (!rd.Read())
+                    return null;
+
+                return Map(rd);
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("No fue posible consultar el mantenimiento seleccionado.", ex);
+            }
+            finally
+            {
+                rd?.Close();
+                command?.Dispose();
+                CloseDb();
+            }
         }
 
         public int insert(Mantenimientos paMantenimiento)
@@ -119,7 +165,35 @@ namespace VehiculosDB.Core.Dao
 
         public bool update(Mantenimientos paMantenimiento)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Con = OpenDb();
+
+                command = new SqlCommand(@"UPDATE Mantenimientos
+                        SET IdVehiculo = @IdVehiculo,
+                            Fecha = @Fecha,
+                            Costo = @Costo,
+                            Observaciones = @Observaciones,
+                            IdTipoMantenimiento = @IdTipoMantenimiento
+                        WHERE IdMantenimiento = @Id;", Con);
+
+                command.Parameters.Add("@IdVehiculo", SqlDbType.Int).Value = paMantenimiento.IdVehiculo;
+                command.Parameters.Add("@Fecha", SqlDbType.Date).Value = paMantenimiento.Fecha.Date;
+                command.Parameters.Add("@Costo", SqlDbType.Decimal).Value = paMantenimiento.Costo;
+                command.Parameters.Add("@Observaciones", SqlDbType.NVarChar, 200).Value = (object?)paMantenimiento.Observaciones ?? DBNull.Value;
+                command.Parameters.Add("@IdTipoMantenimiento", SqlDbType.Int).Value = paMantenimiento.IdTipoMantenimiento;
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = paMantenimiento.IdMantenimiento;
+                return command.ExecuteNonQuery() == 1;
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("No fue posible actualizar el mantenimiento.", ex);
+            }
+            finally
+            {
+                command?.Dispose();
+                CloseDb();
+            }
         }
     }
 }
